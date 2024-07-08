@@ -1,44 +1,3 @@
-// // Creates a header element in the html
-// const header = document.createElement(`header`);
-// //appends the header to the body element
-// document.body.append(header);
-// //creates a h1 element
-// const h1 = document.createElement(`h1`);
-// //Assigns h1 a text
-// h1.textContent = `Mishi Shopping list`;
-// header.append(h1);
-
-// //creates a div element for where to write list
-// const container1 = document.createElement(`div`);
-// container1.setAttribute(`id`, `introduction`);
-// document.body.append(container1);
-
-// const form = document.createElement(`form`);
-// form.setAttribute(`id`, `filler`)
-// container1.append(form)
-// const label = document.createElement(`label`)
-// label.textContent = `Enter Items to be added:`
-// form.appendChild(label);
-
-// const input = document.createElement(`input`)
-// input.setAttribute(`id`, `addzone`)
-// input.setAttribute(`type`, `text`)
-// input.setAttribute(`placeholder`, `description`);
-// form.append(input);
-
-// const submit = document.createElement(`input`)
-// input.setAttribute(`id`, `submit`)
-// // submit.addEventListener(`click`, submitForm)
-// input.setAttribute(`type`, `submit`)
-// form.append(submit);
-
-// // function submitForm(e){
-// //     e.preventDefault();
-// //     console.log(e.target.txt.value);
-// //     alert(`I have been clicked`)
-// // }
-
-
 // Create header element
 const header = document.createElement('header');
 document.body.append(header);
@@ -71,6 +30,8 @@ form.append(submitBtn);
 const itemList = document.createElement('ul');
 shoppingList.append(itemList);
 
+let shoppingItems = [];
+
 // Function to add item to the list
 form.addEventListener('submit', function(event) {
   event.preventDefault();
@@ -81,17 +42,24 @@ form.addEventListener('submit', function(event) {
   }
 });
 
-// Function to add item to the list
+// Function to add item to the list and array
 function addItemToList(itemAdds) {
-  const li = document.createElement('li');
-  li.textContent = itemAdds;
+    // Add item to the array
+    shoppingItems.push(itemAdds);
+  
+    const li = document.createElement('li');
+    li.textContent = itemAdds;
 
   // Add button to mark item as purchased
   const purchaseBtn = document.createElement('button');
   purchaseBtn.textContent = 'Purchase';
   purchaseBtn.addEventListener('click', function() {
     alert(`items purchased`)
-    // Remove the item from the list
+    // Remove the item from the list and arrat
+    const itemIndex = shoppingItems.indexOf(itemAdds);
+    if (itemIndex !== -1) {
+      shoppingItems.splice(itemIndex, 1);
+    }
     li.remove();
   });
   li.append(purchaseBtn);
@@ -104,5 +72,6 @@ const clearBtn = document.createElement('button');
 clearBtn.textContent = 'Clear List';
 clearBtn.addEventListener('click', function() {
   itemList.innerHTML = '';
+  shoppingItems = [];
 });
 shoppingList.append(clearBtn);
